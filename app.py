@@ -1,33 +1,56 @@
-# app.py
 from flask import Flask, request, jsonify
+from supabase import create_client, Client
 import os
+from generate_personal_image import generate_image_from_json  # ← 画像生成関数
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
-def generate_image_from_text(text, name, birthdate, birthplace, birthtime, lineId):
-    # ここに既存の画像生成処理を呼び出す
-    output_path = f"/tmp/{lineId}_generated.png"
-    # ダミーでファイルを作るだけ（仮の処理）
-    with open(output_path, 'w') as f:
-        f.write("dummy image content")
-    return output_path
+# Supabaseのクライアント設定
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-@app.route("/generate_personal_image", methods=["POST"])
+@app.route('/generate_personal_image', methods=['POST'])
 def generate_personal_image():
-    data = request.get_json()
     try:
-        image_path = generate_image_from_text(
-            data["text"],
-            data["name"],
-            data["birthdate"],
-            data["birthplace"],
-            data["birthtime"],
-            data["lineId"]
-        )
-        image_url = f"https://pay.bellune.jp/generated-images/{os.path.basename(image_path)}"
-        return jsonify({ "imageUrl": image_url })
-    except Exception as e:
-        return jsonify({ "error": str(e) }), 500
+        data = request.get_json()
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+        # GPTのJSON出力
+        user_json = {
+            "personality": data["json"]["personality"],
+            "values": data["json"]["values"],
+            "mission": data["json"]["mission"],
+            "love": data["json"]["love"],
+            "talent": data["json"]["talent"],
+            "message": data["json"]["message"],
+            "challenge": data["json"]["challenge"],
+            "pattern": data["json"]["pattern"]
+        }
+
+        # その他の情報
+        name = data["name"]
+        line_id = data["lineId"]
+
+        # ① 画像生成
+        image_path = generate_image_from_json(user_json, name, line_id)
+
+        # ② Supabaseにアップロード
+        with open(image_path, 'rb') as f:
+            file_data = f.read()
+
+        file_name = f"{line_id}_fortune.png"
+        supabase.storage.from_("personal-images").upload(file_name, file_data, {"content-type": "image/png"})
+
+        # ③ 公開URLを生成
+        public_url = f"{SUPABASE_URL}/storage/v1/object/public/personal-images/{file_name}"
+
+        return jsonify({"imageUrl": public_url})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
