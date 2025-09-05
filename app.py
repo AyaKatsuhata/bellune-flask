@@ -6,7 +6,10 @@ from dotenv import load_dotenv
 import logging
 from datetime import datetime
 
-log_filename = f'./logs/server_{datetime.now().strftime("%Y%m%d")}.log'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_DIR = os.path.join(BASE_DIR, 'logs')
+os.makedirs(LOG_DIR, exist_ok=True)
+log_filename = os.path.join(LOG_DIR, f'server_{datetime.now().strftime("%Y%m%d")}.log')
 logging.basicConfig(
     filename=log_filename,
     level=logging.INFO,
