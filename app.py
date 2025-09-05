@@ -3,6 +3,7 @@ from supabase import create_client, Client
 import os
 from generate_personal_image import generate_image_from_json  # ← 画像生成関数
 from dotenv import load_dotenv
+import logging
 
 load_dotenv()
 
@@ -16,7 +17,14 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 @app.route('/generate_personal_image', methods=['POST'])
 def generate_personal_image():
     try:
-        print("リクエストデータ:", request.get_data())
+        logging.basicConfig(
+            filename='/var/log/bellune/server.log',
+            level=logging.INFO,
+            format='%(asctime)s %(levelname)s: %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+
+        logging.info("リクエストデータ: %s", request.get_data(as_text=True))
         data = request.get_json()
 
         # GPTのJSON出力
