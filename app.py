@@ -4,8 +4,11 @@ import os
 from generate_personal_image import generate_image_from_json  # ← 画像生成関数
 from dotenv import load_dotenv
 import logging
+from datetime import datetime
+
+log_filename = f'./logs/server_{datetime.now().strftime("%Y%m%d")}.log'
 logging.basicConfig(
-    filename='./logs/server.log',
+    filename=log_filename,
     level=logging.INFO,
     format='%(asctime)s %(levelname)s: %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'

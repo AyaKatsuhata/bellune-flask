@@ -43,8 +43,9 @@ def generate_image_from_json(user_json, name, line_id):
         img = Image.open(bg_path).convert("RGBA")
         draw = ImageDraw.Draw(img)
 
-        # Ubuntu想定フォント（環境に応じて変更）
+        # 本番フォント
         # font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+        # 開発フォント
         font_path = "/Library/Fonts/Arial Unicode.ttf"
         font = ImageFont.truetype(font_path, 26)
 
