@@ -44,9 +44,9 @@ def generate_image_from_json(user_json, name, line_id):
         draw = ImageDraw.Draw(img)
 
         # 本番フォント
-        # font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+        font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
         # 開発フォント
-        font_path = "/Library/Fonts/Arial Unicode.ttf"
+        # font_path = "/Library/Fonts/Arial Unicode.ttf"
         font = ImageFont.truetype(font_path, 26)
 
         for key, (x, y, w, h) in positions.items():
