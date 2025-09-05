@@ -25,6 +25,7 @@ def generate_personal_image():
     try:
         logging.info("リクエストデータ: %s", request.get_data(as_text=True))
         data = request.get_json()
+        print("受信データ:", data)
 
         # GPTのJSON出力
         user_json = {
@@ -58,6 +59,7 @@ def generate_personal_image():
         return jsonify({"imageUrl": public_url})
 
     except Exception as e:
+        print("画像生成エラー:", e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
