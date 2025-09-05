@@ -16,6 +16,7 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 @app.route('/generate_personal_image', methods=['POST'])
 def generate_personal_image():
     try:
+        print("リクエストデータ:", request.get_data())
         data = request.get_json()
 
         # GPTのJSON出力
