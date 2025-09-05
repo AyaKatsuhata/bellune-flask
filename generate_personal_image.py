@@ -38,13 +38,13 @@ def draw_multiline(draw, text, position, font, max_width, max_height):
 def generate_image_from_json(user_json, name, line_id):
     try:
         bg_path = "./public/template/background.png"
-        output_path = f"/tmp/{line_id}_fortune.png"
+        output_path = f"./tmp/{line_id}_fortune.png"
 
         img = Image.open(bg_path).convert("RGBA")
         draw = ImageDraw.Draw(img)
 
         # Ubuntu想定フォント（環境に応じて変更）
-        # font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc: Noto Sans CJK JP:style=Regular"
+        # font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
         font_path = "/Library/Fonts/Arial Unicode.ttf"
         font = ImageFont.truetype(font_path, 26)
 

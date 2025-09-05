@@ -51,10 +51,12 @@ def generate_personal_image():
             file_data = f.read()
 
         file_name = f"{line_id}_fortune.png"
+        logging.info("画像生成完了: %s", file_name)
         supabase.storage.from_("personal-images").upload(file_name, file_data, {"content-type": "image/png"})
 
         # ③ 公開URLを生成
         public_url = f"{SUPABASE_URL}/storage/v1/object/public/personal-images/{file_name}"
+        logging.info("画像パス: %s", public_url)
 
         return jsonify({"imageUrl": public_url})
 
