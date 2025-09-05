@@ -45,7 +45,7 @@ def generate_image_from_json(user_json, name, line_id):
 
         # Ubuntu想定フォント（環境に応じて変更）
         # font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc: Noto Sans CJK JP:style=Regular"
-        font_path = "/System/Library/Fonts/Helvetica.ttc"
+        font_path = "/Library/Fonts/Arial Unicode.ttf"
         font = ImageFont.truetype(font_path, 26)
 
         for key, (x, y, w, h) in positions.items():
