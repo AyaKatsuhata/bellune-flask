@@ -60,6 +60,7 @@ def generate_personal_image():
 
     except Exception as e:
         print("画像生成エラー:", e)
+        logging.info("画像生成エラー: %s", e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
