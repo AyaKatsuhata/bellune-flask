@@ -44,7 +44,8 @@ def generate_image_from_json(user_json, name, line_id):
         draw = ImageDraw.Draw(img)
 
         # Ubuntu想定フォント（環境に応じて変更）
-        font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+        # font_path = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc: Noto Sans CJK JP:style=Regular"
+        font_path = "/System/Library/Fonts/Helvetica.ttc"
         font = ImageFont.truetype(font_path, 26)
 
         for key, (x, y, w, h) in positions.items():
