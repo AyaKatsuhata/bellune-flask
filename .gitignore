@@ -14,6 +14,7 @@ tmp/
 # 環境設定
 .env
 .env.*
+.flaskenv
 
 # macOS系
 .DS_Store
