@@ -56,7 +56,7 @@ def generate_personal_image():
         with open(image_path, 'rb') as f:
             file_data = f.read()
 
-        file_name = f"{line_id}_fortune_{datetime.now().strftime('%Y%m%d')}.png"
+        file_name = f"{line_id}_fortune_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
         logging.info("画像生成完了: %s", file_name)
         supabase.storage.from_("personal-images").upload(file_name, file_data, {"content-type": "image/png"})
 
