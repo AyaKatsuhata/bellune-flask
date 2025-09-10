@@ -4,14 +4,14 @@ import os
 WIDTH, HEIGHT = 1080, 1920
 
 positions = {
-    "personality": (50, 140, 430, 600),
-    "values": (620, 120, 430, 280),
-    "mission": (620, 510, 430, 280),
-    "love": (50, 950, 285, 450),
-    "talent": (400, 950, 285, 450),
-    "message": (755, 950, 285, 450),
-    "challenge": (50, 1540, 440, 360),
-    "pattern": (600, 1540, 440, 360),
+    "personality": (50, 140, 440, 600),
+    "values": (590, 115, 440, 280),
+    "mission": (590, 495, 440, 280),
+    "love": (45, 930, 290, 460),
+    "talent": (395, 930, 290, 460),
+    "message": (750, 930, 290, 456),
+    "challenge": (40, 1530, 460, 370),
+    "pattern": (580, 1530, 460, 370),
 }
 
 def draw_multiline(draw, text, position, font, max_width, max_height):
