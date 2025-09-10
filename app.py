@@ -29,9 +29,10 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 @app.route('/generate_personal_image', methods=['POST'])
 def generate_personal_image():
     try:
+        data = request.get_json()
+        logging.info("===================START LINEID: %s =========================", data["lineId"])
         logging.info("リクエストデータ: %s", request.get_data(as_text=True))
         data = request.get_json()
-        print("受信データ:", data)
 
         # GPTのJSON出力
         user_json = {
@@ -57,18 +58,16 @@ def generate_personal_image():
             file_data = f.read()
 
         file_name = f"{line_id}_fortune_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
-        logging.info("画像生成完了: %s", file_name)
         supabase.storage.from_("personal-images").upload(file_name, file_data, {"content-type": "image/png"})
 
         # ③ 公開URLを生成
         public_url = f"{SUPABASE_URL}/storage/v1/object/public/personal-images/{file_name}"
-        logging.info("画像パス: %s", public_url)
 
+        logging.info("===================END LINEID: %s =========================", data["lineId"])
         return jsonify({"imageUrl": public_url})
 
     except Exception as e:
-        print("画像生成エラー:", e)
-        logging.info("画像生成エラー: %s", e)
+        logging.info("※※※※※※※※ 画像生成エラー: %s", e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
